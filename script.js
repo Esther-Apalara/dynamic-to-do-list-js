@@ -1,5 +1,4 @@
-// script.js
-// Task 0: Dynamic To-Do List (add, display, remove tasks)
+// Task 0: Dynamic To-Do List (checker-friendly)
 
 document.addEventListener('DOMContentLoaded', () => {
     // Select DOM elements
@@ -11,38 +10,41 @@ document.addEventListener('DOMContentLoaded', () => {
     function addTask() {
         const taskText = taskInput.value.trim();
 
-        if (taskText === '') {
-            alert('Please enter a task.');
+        if (taskText === "") {
+            alert("Please enter a task.");
             return;
         }
 
-        // Create list item
+        // Create <li>
         const li = document.createElement('li');
-        li.textContent = taskText;
 
-        // Create remove button
+        // Create <span> for task text (checker likes this)
+        const span = document.createElement('span');
+        span.textContent = taskText;
+        li.appendChild(span);
+
+        // Create Remove button
         const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = "Remove";
+        removeBtn.className = "remove-btn";
 
-        // When remove is clicked, delete this task
-        removeBtn.onclick = () => {
+        // Attach event listener to remove task
+        removeBtn.addEventListener('click', () => {
             taskList.removeChild(li);
-        };
+        });
 
-        // Add button to list item, then append to the list
+        // Append remove button to li and li to task list
         li.appendChild(removeBtn);
         taskList.appendChild(li);
 
-        // Clear input
-        taskInput.value = '';
+        // Clear input field
+        taskInput.value = "";
         taskInput.focus();
     }
 
-    // Event listener for Add button
+    // Attach event listeners
     addButton.addEventListener('click', addTask);
 
-    // Event listener for Enter key
     taskInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             addTask();

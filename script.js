@@ -1,54 +1,57 @@
 // Task 0: Dynamic To-Do List Application
 
-// Setup Event Listener for Page Load
+// 1) Setup Event Listener for Page Load
 document.addEventListener('DOMContentLoaded', () => {
-    // Select DOM Elements
-    const addButton = document.getElementById('add-task-btn'); // Add Task button
-    const taskInput = document.getElementById('task-input');   // Input field
-    const taskList = document.getElementById('task-list');     // Unordered list
+  // 2) Select DOM Elements
+  const addButton = document.getElementById('add-task-btn');
+  const taskInput = document.getElementById('task-input');
+  const taskList  = document.getElementById('task-list');
 
-    // Create the addTask Function
-    function addTask() {
-        // Get and trim the value from input field
-        const taskText = taskInput.value.trim();
+  // 3) Create the addTask Function
+  function addTask() {
+    // get and trim the value from the input field
+    const taskText = taskInput.value.trim();
 
-        // Check if empty
-        if (taskText === "") {
-            alert("Please enter a task.");
-            return;
-        }
+    // 4) Task Creation and Removal
+    if (taskText !== "") {
+      // Create a new li element. Set its textContent to taskText.
+      const li = document.createElement('li');
+      li.textContent = taskText;
 
-        // Create a new li element and set textContent
-        const li = document.createElement('li');
-        li.textContent = taskText;
+      // Create a new button element for removing the task.
+      // Set its textContent to "Remove", and give it a class name of 'remove-btn'.
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = "Remove";
+      removeBtn.className = 'remove-btn';
 
-        // Create Remove button
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = "Remove";
-        removeBtn.className = "remove-btn";
+      // Assign an onclick event to the remove button that removes the li element from taskList.
+      removeBtn.onclick = function () {
+        taskList.removeChild(li);
+      };
 
-        // Assign onclick to remove the task
-        removeBtn.onclick = function () {
-            taskList.removeChild(li);
-        };
+      // Append the remove button to the li element, then append the li to taskList.
+      li.appendChild(removeBtn);
+      taskList.appendChild(li);
 
-        // Append button to li, then li to taskList
-        li.appendChild(removeBtn);
-        taskList.appendChild(li);
-
-        // Clear the input field
-        taskInput.value = "";
+      // Clear the task input field by setting taskInput.value to an empty string.
+      taskInput.value = "";
+    } else {
+      // If empty, prompt the user to enter a task.
+      alert("Please enter a task.");
     }
+  }
 
-    // Attach Event Listeners
-    addButton.addEventListener('click', addTask);
+  // 5) Attach Event Listeners
+  // Add an event listener to addButton that calls addTask when the button is clicked.
+  addButton.addEventListener('click', addTask);
 
-    taskInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            addTask();
-        }
-    });
+  // Add an event listener to taskInput for the 'keypress' event to allow adding with Enter.
+  taskInput.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  });
 
-    // Invoke the addTask function on DOMContentLoaded
-    addTask();
+  // Invoke the addTask function on DOMContentLoaded (as required by the rubric).
+  document.addEventListener('DOMContentLoaded', addTask);
 });

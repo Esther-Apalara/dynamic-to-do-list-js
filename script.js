@@ -1,5 +1,4 @@
 // Task 0: Dynamic To-Do List Application
-
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Select DOM elements
     const addButton = document.getElementById('add-task-btn');
@@ -8,17 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Function to add a task
     function addTask() {
-        const taskText = taskInput.value.trim(); // get input and remove spaces
+        const taskText = taskInput.value.trim();
 
+        // Check for empty input
         if (taskText === "") {
-            alert("Please enter a task."); // check empty input
+            alert("Please enter a task.");
             return;
         }
 
         // Create li element
         const li = document.createElement('li');
-
-        // Add task text as a text node (checker-proof)
         li.appendChild(document.createTextNode(taskText));
 
         // Create Remove button
@@ -26,24 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
         removeBtn.textContent = "Remove";
         removeBtn.className = "remove-btn";
 
-        // Attach onclick event to remove task
+        // Remove task when clicked
         removeBtn.onclick = function () {
             taskList.removeChild(li);
         };
 
-        // Append button to li, then li to task list
+        // Add button to li, then li to list
         li.appendChild(removeBtn);
         taskList.appendChild(li);
 
-        // Clear input field and focus
+        // Clear and refocus input
         taskInput.value = "";
         taskInput.focus();
     }
 
-    // 3. Attach event listeners
+    // 3. Event listeners
     addButton.addEventListener('click', addTask);
 
-    taskInput.addEventListener('keypress', function(event) {
+    taskInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             addTask();
         }
